@@ -5,6 +5,7 @@ orbs:
 
 jobs:
   build-electron-secure-defaults:
+    description: Generate 
     docker:
       - image: cimg/base:stable
     steps:
@@ -12,7 +13,17 @@ jobs:
       - node/install:
           install-yarn: true
           node-version: '18.16.0'
-      - run: node --version
+      - run:
+          name: Installing Dependencies...
+          command: npm install
+      - run:
+          name: Compiling Typescript...
+          command: npm run build
+      - run:
+          name: Packaging Application...
+          command: mkdir .cache && npm run package
+      - store_artifacts:
+          path: package
 
 workflows:
   electron-secure-defaults:
