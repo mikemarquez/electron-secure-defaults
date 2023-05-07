@@ -1,0 +1,20 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@5.1.0
+
+jobs:
+  build-electron-secure-defaults:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - node/install:
+          install-yarn: true
+          node-version: '18.16.0'
+      - run: node --version
+
+workflows:
+  electron-secure-defaults:
+    jobs:
+      - build-electron-secure-defaults
