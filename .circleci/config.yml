@@ -4,8 +4,24 @@ orbs:
   node: circleci/node@5.1.0
 
 jobs:
+  lint-electron-secure-defaults:
+    description: Run eslint Against Source Code
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - node/install:
+          install-yarn: false
+          node-version: '18.16.0'
+      - run:
+          name: Installing Dependencies...
+          command: npm install
+      - run:
+          name: Running Linter against Electron Secure Defaults...
+          command: npm run lint
+
   build-electron-secure-defaults:
-    description: Generate 
+    description: Build and Package ESD 
     docker:
       - image: cimg/base:stable
     steps:
@@ -28,4 +44,7 @@ jobs:
 workflows:
   electron-secure-defaults:
     jobs:
-      - build-electron-secure-defaults
+      - lint-electron-secure-defaults
+      - build-electron-secure-defaults:
+          requires:
+            - lint-electron-secure-defaults
