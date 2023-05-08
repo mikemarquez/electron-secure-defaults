@@ -20,6 +20,9 @@ jobs:
       - run:
           name: Running Linter against Electron Secure Defaults...
           command: npm run lint
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
 
   build-electron-secure-defaults:
     description: Build and Package ESD 
