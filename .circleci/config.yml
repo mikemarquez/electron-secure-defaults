@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   node: circleci/node@5.1.0
+  slack: circleci/slack@4.12.3
 
 jobs:
   lint-electron-secure-defaults:
@@ -40,6 +41,12 @@ jobs:
           command: mkdir .cache && npm run package
       - store_artifacts:
           path: package
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
+      - slack/notify:
+          event: pass
+          template: success_tagged_deploy_1
 
 workflows:
   electron-secure-defaults:
